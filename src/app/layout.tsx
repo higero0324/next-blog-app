@@ -6,8 +6,8 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
-  title: "NextBlogApp",
-  description: "Built to learn Next.js and modern web development.",
+  title: "Fuwa Note",
+  description: "A cozy blog crafted with Next.js and a touch of wonder.",
 };
 
 type Props = {
@@ -19,8 +19,12 @@ const RootLayout: React.FC<Props> = (props) => {
   return (
     <html lang="ja">
       <body>
-        <Header />
-        <div className="mx-4 mt-2 max-w-2xl md:mx-auto">{children}</div>
+        <div className="min-h-screen">
+          <Header />
+          <div className="mx-4 mt-6 max-w-5xl pb-16 md:mx-auto">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );

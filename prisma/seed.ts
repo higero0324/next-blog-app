@@ -1,43 +1,61 @@
 import { prisma } from "@/lib/prisma";
 
 const main = async () => {
-  // 各テーブルから既存の全レコードを削除
-  await prisma.postCategory?.deleteMany();
-  await prisma.post?.deleteMany();
-  await prisma.category?.deleteMany();
+  await prisma.postCategory.deleteMany();
+  await prisma.post.deleteMany();
+  await prisma.category.deleteMany();
 
-  // カテゴリデータの作成 (テーブルに対するレコードの挿入)
-  const c1 = await prisma.category.create({ data: { name: "カテゴリ1" } });
-  const c2 = await prisma.category.create({ data: { name: "カテゴリ2" } });
-  const c3 = await prisma.category.create({ data: { name: "カテゴリ3" } });
+  const design = await prisma.category.create({ data: { name: "Design" } });
+  const writing = await prisma.category.create({ data: { name: "Writing" } });
+  const nextjs = await prisma.category.create({ data: { name: "Next.js" } });
 
-  // 投稿記事データの作成  (テーブルに対するレコードの挿入)
-  const p1 = await prisma.post.create({
+  await prisma.post.create({
     data: {
-      title: "投稿1",
-      content: "投稿1の本文。<br/>投稿1の本文。投稿1の本文。",
+      title: "やさしいUIのつくり方",
+      content:
+        "<p>やさしいUIは、余白とリズムから始まります。</p><p>色数を絞り、視線の動きに合わせて情報を並べると、自然と心地よく読めるようになります。</p>",
       coverImageURL:
         "https://w1980.blob.core.windows.net/pg3/cover-img-red.jpg",
       categories: {
-        create: [{ categoryId: c1.id }, { categoryId: c2.id }], // ◀◀ 注目
+        create: [
+          { categoryId: design.id },
+          { categoryId: writing.id },
+        ],
       },
     },
   });
 
-  const p2 = await prisma.post.create({
+  await prisma.post.create({
     data: {
-      title: "投稿2",
-      content: "投稿2の本文。<br/>投稿2の本文。投稿2の本文。",
+      title: "小さな改善で読みやすく",
+      content:
+        "<p>行間を少し広げるだけで、文章の印象はぐっとやさしくなります。</p><p>見出しと本文の差を作ると、読み手の迷いが減ります。</p>",
       coverImageURL:
         "https://w1980.blob.core.windows.net/pg3/cover-img-green.jpg",
       categories: {
-        create: [{ categoryId: c2.id }, { categoryId: c3.id }], // ◀◀ 注目
+        create: [
+          { categoryId: design.id },
+          { categoryId: nextjs.id },
+        ],
       },
     },
   });
 
-  console.log(JSON.stringify(p1, null, 2));
-  console.log(JSON.stringify(p2, null, 2));
+  await prisma.post.create({
+    data: {
+      title: "Next.jsでまとめる制作記録",
+      content:
+        "<p>UIの試行錯誤を記録しておくと、次の改善が速くなります。</p><p>小さな気づきを残しておくことが、大きな進歩につながります。</p>",
+      coverImageURL:
+        "https://w1980.blob.core.windows.net/pg3/cover-img-purple.jpg",
+      categories: {
+        create: [
+          { categoryId: writing.id },
+          { categoryId: nextjs.id },
+        ],
+      },
+    },
+  });
 };
 
 main()

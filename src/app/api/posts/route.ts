@@ -1,19 +1,35 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse, NextRequest } from "next/server";
-import { Post } from "@/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
-export const GET = async (req: NextRequest) => {
+type PostWithCategories = Prisma.PostGetPayload<{
+  include: { categories: { include: { category: true } } };
+}>;
+
+const toPostResponse = (post: PostWithCategories) => ({
+  ...post,
+  categories: post.categories.map((item) => item.category),
+});
+
+export const GET = async (_req: NextRequest) => {
   try {
-    const posts: Post[] = await prisma.post.findMany({
+    const posts = await prisma.post.findMany({
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+      },
     });
-    return NextResponse.json(posts);
+    return NextResponse.json(posts.map(toPostResponse));
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "投稿記事の一覧の取得に失敗しました" },
+      { error: "記事の取得に失敗しました。" },
       { status: 500 },
     );
   }

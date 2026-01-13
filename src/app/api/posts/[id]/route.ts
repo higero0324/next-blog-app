@@ -1,54 +1,45 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse, NextRequest } from "next/server";
+import type { Prisma } from "@/generated/prisma/client";
 
 type RouteParams = {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 };
 
-export const GET = async (req: NextRequest, routeParams: RouteParams) => {
-  try {
-    // パラメータプレースホルダから id を取得
-    const { id } = await routeParams.params;
+type PostWithCategories = Prisma.PostGetPayload<{
+  include: { categories: { include: { category: true } } };
+}>;
 
-    // findUnique は id に一致する「1件」のレコードを取得するメソッド
-    // もし条件に一致するレコードが存在しないときは null が戻り値となる
+const toPostResponse = (post: PostWithCategories) => ({
+  ...post,
+  categories: post.categories.map((item) => item.category),
+});
+
+export const GET = async (_req: NextRequest, { params }: RouteParams) => {
+  try {
+    const { id } = await params;
     const post = await prisma.post.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        coverImageURL: true,
-        createdAt: true,
-        updatedAt: true,
+      where: {
+        id,
+      },
+      include: {
         categories: {
-          select: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
+          include: {
+            category: true,
           },
         },
       },
     });
 
-    // 投稿記事が存在しないときの ( post が null のときの) 処理
     if (!post) {
-      return NextResponse.json(
-        { error: `id='${id}'の投稿記事は見つかりませんでした` },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
-    return NextResponse.json(post);
+    return NextResponse.json(toPostResponse(post));
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "投稿記事の取得に失敗しました" },
+      { error: "記事の取得に失敗しました。" },
       { status: 500 },
     );
   }

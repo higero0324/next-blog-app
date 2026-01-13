@@ -1,0 +1,13 @@
+### 記事の投稿
+POST http://localhost:3000/api/admin/posts
+Content-Type: application/json
+
+{
+  "title": "投稿X",
+  "content": "投稿Xの本文。<br/>投稿Xの本文。投稿Xの本文。",
+  "coverImageURL": "https://....",
+  "categoryIds": [
+    "d3e10601-3cfa-48f3-9ede-886647a1063b",
+    "5a8d8365-e435-4ed4-a05e-34237c1b2ff0"
+  ]
+}

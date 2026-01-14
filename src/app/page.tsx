@@ -110,10 +110,10 @@ const Page: React.FC = () => {
           <div className="space-y-5">
             <div className="inline-flex items-center gap-2 rounded-full bg-pink-100 px-4 py-2 text-xs font-medium text-pink-700">
               <FontAwesomeIcon icon={faStar} />
-              今週のアップデート
+              最近のアップデート
             </div>
             <h1 className="font-display text-4xl leading-tight text-slate-900 md:text-5xl">
-              かわいくて、読みやすい。
+              読みやすさを大切に。
             </h1>
             <p className="text-base text-slate-600 md:text-lg">
               UI/UXの工夫や開発メモを、やさしい言葉でまとめています。
@@ -135,10 +135,10 @@ const Page: React.FC = () => {
           </div>
           <div className="space-y-4">
             <div className="rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[var(--shadow-soft)]">
-              <div className="text-xs text-slate-500">今週のテーマ</div>
-              <div className="mt-2 font-display text-2xl">UIの小さな改善</div>
+              <div className="text-xs text-slate-500">最近のテーマ</div>
+              <div className="mt-2 font-display text-2xl">ブログ運用のはじまり</div>
               <p className="mt-2 text-sm text-slate-600">
-                読みやすさを高めるレイアウトの工夫をまとめました。
+                開設初日の気づきや、準備で詰まったところをまとめました。
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -276,15 +276,15 @@ const Page: React.FC = () => {
             <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[var(--shadow-soft)]">
               <div className="text-sm font-semibold text-slate-700">運用メモ</div>
               <ul className="mt-4 space-y-3 text-sm text-slate-600">
-                <li>週1回の更新を目標に</li>
-                <li>UIの改善ポイントを共有</li>
-                <li>読者の声を次回に反映</li>
+                <li>時々更新、気楽に続ける</li>
+                <li>詰まったところは正直に記録</li>
+                <li>気づいたら少しずつ改善</li>
               </ul>
             </div>
             <div className="rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[var(--shadow-soft)]">
               <div className="text-sm font-semibold text-slate-700">ニュースレター</div>
               <p className="mt-2 text-sm text-slate-600">
-                月1回のまとめをお届けします。
+                たまに近況まとめをお届けします。
               </p>
               <div className="mt-4 flex gap-2">
                 <input

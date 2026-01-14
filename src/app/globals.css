@@ -73,3 +73,15 @@ a {
 ::selection {
   background: #ffd6ea;
 }
+
+a.bg-slate-900,
+button.bg-slate-900 {
+  color: #ffffff;
+}
+
+a.bg-slate-900:hover,
+button.bg-slate-900:hover,
+a.bg-slate-900:focus-visible,
+button.bg-slate-900:focus-visible {
+  color: #ffffff;
+}
